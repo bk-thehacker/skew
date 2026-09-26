@@ -7,39 +7,46 @@
   <title>For My Mommy 🖤</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,700;1,400;1,600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
+  <!-- Ambient Particle Canvas -->
+  <canvas id="ambientCanvas"></canvas>
   <div id="stars"></div>
+
+  <!-- Audio Toggle -->
   <header>
-    <button id="music" aria-label="Music">♫</button>
+    <button id="music" aria-label="Music Toggle">♫</button>
   </header>
 
   <main>
+    <!-- HERO SECTION -->
     <section class="hero" id="hero">
       <div class="glow"></div>
-      <p class="eyebrow">A little world made for</p>
+      <p class="eyebrow">A sanctuary made for</p>
       <h1>My <i>Mommy</i></h1>
-      <p>some memories, little things,<br>and a whole lot of us.</p>
-      <button class="cta" data-go="#counter">Enter my little world →</button>
-      <small>scroll gently ↓</small>
+      <p class="subtitle"><span id="typewriter"></span></p>
+      <button class="cta" data-go="#counter">Begin the journey →</button>
+      <small class="scrollHint">scroll gently ↓</small>
     </section>
 
-    <!-- LIVE COUNTER SECTION -->
+    <!-- LIVE TIME COUNTER -->
     <section class="counterSection" id="counter">
-      <label>THE TICKING HEART</label>
+      <label>01 · THE TICKING HEART</label>
       <h2 class="title">Loving you for...</h2>
       <div class="counterGrid">
-        <div class="glass countBox"><span id="cDays">0</span><small>DAYS</small></div>
-        <div class="glass countBox"><span id="cHours">0</span><small>HOURS</small></div>
-        <div class="glass countBox"><span id="cMins">0</span><small>MINS</small></div>
-        <div class="glass countBox"><span id="cSecs">0</span><small>SECS</small></div>
+        <div class="glass countBox"><span id="cDays">00</span><small>DAYS</small></div>
+        <div class="glass countBox"><span id="cHours">00</span><small>HOURS</small></div>
+        <div class="glass countBox"><span id="cMins">00</span><small>MINUTES</small></div>
+        <div class="glass countBox"><span id="cSecs">00</span><small>SECONDS</small></div>
       </div>
     </section>
 
+    <!-- ORIGIN STORY -->
     <section id="story">
-      <label>01 · WHERE IT STARTED</label>
+      <label>02 · WHERE IT STARTED</label>
       <article class="glass story">
         <div class="date">08<small>MAY</small></div>
         <div>
@@ -50,36 +57,44 @@
       </article>
     </section>
 
+    <!-- NICKNAMES INTERACTIVE -->
     <section>
-      <label>02 · THE NAMES WE BECAME</label>
+      <label>03 · THE NAMES WE BECAME</label>
       <h2 class="title">From <i>Junior</i> to <i>Mommy.</i></h2>
       <div class="names">
-        <button class="active">Junior<small>the first name</small></button>
-        <b>→</b>
-        <button>Senior<small>your name for me</small></button>
-        <b>→</b>
-        <button>Mommy<small>the one that stayed</small></button>
+        <button class="nameBtn active" data-desc="The title at the very beginning.">Junior</button>
+        <b class="arrow">→</b>
+        <button class="nameBtn" data-desc="Your name for me that stuck forever.">Senior</button>
+        <b class="arrow">→</b>
+        <button class="nameBtn" data-desc="The one that took over everything.">Mommy</button>
       </div>
-      <div class="extras glass">and then came <strong>Sweetie</strong><strong>Hottie</strong><strong>ur highness</strong></div>
+      <p id="nameDetail" class="nameDetail">The title at the very beginning.</p>
+      <div class="extras glass">
+        <span>and then came:</span>
+        <strong>Sweetie</strong>
+        <strong>Hottie</strong>
+        <strong>ur highness</strong>
+      </div>
     </section>
 
+    <!-- TIMELINE MILESTONES -->
     <section>
-      <label>03 · LITTLE MOMENTS</label>
+      <label>04 · LITTLE MOMENTS</label>
       <div class="timeline">
         <article class="glass">
-          <span>23 JUN · 01:39 AM</span>
+          <span class="tag">23 JUN · 01:39 AM</span>
           <h2>The day I said it.</h2>
           <p>“I love you.”</p>
           <small>One sentence. One special moment. One memory worth keeping forever.</small>
         </article>
         <article class="glass">
-          <span>22 AUG · ~03:30</span>
+          <span class="tag">22 AUG · ~03:30</span>
           <h2>1:47</h2>
           <p>Our first call.</p>
           <small>I was nervous. Very nervous. The call lasted about 1 minute and 47 seconds.</small>
         </article>
         <article class="glass">
-          <span>19 SEP</span>
+          <span class="tag">19 SEP</span>
           <h2>The momo milestone 🍜</h2>
           <p>Your first time eating momos.</p>
           <small>A tiny detail. Exactly the kind of detail I don't want to forget.</small>
@@ -87,19 +102,21 @@
       </div>
     </section>
 
+    <!-- ESSENCE / TRAITS -->
     <section>
-      <label>04 · THINGS THAT FEEL LIKE YOU</label>
+      <label>05 · THINGS THAT FEEL LIKE YOU</label>
       <div class="traits">
-        <article class="glass">🖤<strong>Black</strong><small>one of your colours</small></article>
-        <article class="glass">💙<strong>Blue</strong><small>another one</small></article>
+        <article class="glass">🖤<strong>Black</strong><small>one of your main shades</small></article>
+        <article class="glass">💙<strong>Blue</strong><small>another mood</small></article>
         <article class="glass">🌲<strong>Dark Green</strong><small>your kind of shade</small></article>
         <article class="glass">✨<strong>Gojo Satoru</strong><small>favourite character</small></article>
-        <article class="glass wide">🏡<strong>Nani ka ghar</strong><small>favourite place</small></article>
+        <article class="glass wide">🏡<strong>Nani ka ghar</strong><small>favourite place in the world</small></article>
       </div>
     </section>
 
+    <!-- CLASSIFIED SECRETS -->
     <section>
-      <label>05 · CLASSIFIED MOMMY FILES</label>
+      <label>06 · CLASSIFIED MOMMY FILES</label>
       <h2 class="title">Some things are better <i>unlocked.</i></h2>
       <div class="secrets">
         <button class="glass secret" data-msg="For the days when you miss me: remember that somewhere, someone is smiling because you exist.">🔒<small>Open when you miss me</small></button>
@@ -108,29 +125,31 @@
       </div>
     </section>
 
-    <!-- REASONS WHY I LOVE YOU SECTION -->
+    <!-- RANDOM LOVE REASONS -->
     <section>
-      <label>06 · SPECIAL FILE · WHY YOU?</label>
+      <label>07 · SPECIAL FILE · WHY YOU?</label>
       <h2 class="title">Reasons why I <i>love</i> you.</h2>
       <div class="glass loveCard">
-        <p id="loveReason">Click the button below to see one of the million reasons...</p>
+        <p id="loveReason">Click the button below to reveal one of a million reasons...</p>
         <button id="nextReason" class="cta">Give me another reason 💖</button>
       </div>
     </section>
 
+    <!-- MEMORY GALLERY -->
     <section>
-      <label>07 · OUR GALLERY</label>
+      <label>08 · OUR GALLERY</label>
       <div class="photos">
-        <div>📷<small>Your photo goes here</small></div>
-        <div>📷<small>A memory goes here</small></div>
-        <div>📷<small>One more memory</small></div>
+        <div class="glass">📷<small>Your photo goes here</small></div>
+        <div class="glass">📷<small>A memory goes here</small></div>
+        <div class="glass">📷<small>One more memory</small></div>
       </div>
     </section>
 
+    <!-- CUTE MINI GAME -->
     <section class="game">
-      <label>08 · A TINY CUTE GAME</label>
+      <label>09 · A TINY CUTE GAME</label>
       <h2 class="title">Catch the <i>Hearts</i> 💗</h2>
-      <p class="gameIntro">Thoda sa cute sa challenge — hearts pakdo, pink heart bonus dega. Bas 25 seconds. 😌</p>
+      <p class="gameIntro">Thoda sa cute challenge — hearts pakdo, pink heart bonus dega. Bas 25 seconds. 😌</p>
       <div class="gameCard glass">
         <div class="gameTop">
           <span>Score <b id="gameScore">0</b></span>
@@ -143,6 +162,7 @@
       </div>
     </section>
 
+    <!-- FINAL SECTION -->
     <section class="final">
       <div class="heart">♥</div>
       <p class="eyebrow">23 JUNE</p>
@@ -153,10 +173,11 @@
     </section>
   </main>
 
+  <!-- MODAL DIALOG -->
   <div class="modal" id="modal">
     <div class="glass box">
-      <button id="close">×</button>
-      <div>🔓</div>
+      <button id="close" aria-label="Close Modal">×</button>
+      <div class="modalIcon">🔓</div>
       <p id="msg"></p>
     </div>
   </div>
