@@ -1,68 +1,87 @@
 const $ = s => document.querySelector(s); const $$ = s => document.querySelectorAll(s);
 
-// Star generator background
-for (let i = 0; i < 85; i++) {
-  let x = document.createElement("i");
-  x.className = "star";
-  x.style.left = Math.random() * 100 + "%";
-  x.style.top = Math.random() * 100 + "%";
-  x.style.animationDelay = Math.random() * 3 + "s";
-  $("#stars").append(x); }  // Smooth scrolling CTA buttons $$("[data-go]").forEach(b => b.onclick = () => $(b.dataset.go)?.scrollIntoView({ behavior: "smooth" }));
+// 1. STARFIELD GENERATOR
+for (let i = 0; i < 90; i++) {
+  const star = document.createElement("i");
+  star.className = "star";
+  star.style.left = Math.random() * 100 + "%";
+  star.style.top = Math.random() * 100 + "%";
+  star.style.animationDelay = Math.random() * 3 + "s";
+  $("#stars").append(star);
+}
 
-// Modal handlers
-const modal = $("#modal"), msg = $("#msg"); $$(".secret").forEach(b => b.onclick = () => {
-  msg.textContent = b.dataset.msg;
-  modal.classList.add("show");
+// 2. TYPEWRITER EFFECT IN HERO
+const phrases = [
+  "some memories, little things, and a whole lot of us.",
+  "a little dark aesthetic universe created for you.",
+  "every moment, captured and kept forever."
+];
+let phraseIdx = 0, charIdx = 0, isDeleting = false;
+
+function typeEffect() {
+  const current = phrases[phraseIdx];
+  const target = $("#typewriter");   if (!target) return;    if (isDeleting) {     target.textContent = current.substring(0, charIdx--);   } else {     target.textContent = current.substring(0, charIdx++);   }    let speed = isDeleting ? 30 : 60;   if (!isDeleting && charIdx === current.length + 1) {     speed = 2200;     isDeleting = true;   } else if (isDeleting && charIdx === 0) {     isDeleting = false;     phraseIdx = (phraseIdx + 1) \% phrases.length;     speed = 500;   }   setTimeout(typeEffect, speed); } typeEffect();  // 3. SMOOTH NAVIGATION $$("[data-go]").forEach(b => {   b.onclick = () => $(b.dataset.go)?.scrollIntoView({ behavior: "smooth" });
+});
+
+// 4. MODAL LOGIC
+const modal = $("#modal"), msg = $("#msg"); $$(".secret").forEach(b => {
+  b.onclick = () => {
+    msg.textContent = b.dataset.msg;
+    modal.classList.add("show");
+  };
 });
 $("#close").onclick = () => modal.classList.remove("show");
 modal.onclick = e => { if (e.target === modal) modal.classList.remove("show"); };
 document.onkeydown = e => { if (e.key === "Escape") modal.classList.remove("show"); };
 
-// Interactive Name Buttons
-$$(".names button").forEach(b => b.onclick = () => {   $$
-(".names button").forEach(x => x.classList.remove("active"));
-  b.classList.add("active");
+// 5. INTERACTIVE NICKNAMES
+$$(".nameBtn").forEach(b => {   b.onclick = () => {     $$
+(".nameBtn").forEach(x => x.classList.remove("active"));
+    b.classList.add("active");
+    $("#nameDetail").textContent = b.dataset.desc;
+  };
 });
 
-// Audio Web Synthesizer (with iOS wake fix)
-let ctx, osc, gain, on = false;
+// 6. AUDIO SYNTHESIZER (iOS Wake Compatible)
+let ctx, osc, gain, audioOn = false;
 $("#music").onclick = () => {
   if (!ctx) {
     ctx = new (window.AudioContext || window.webkitAudioContext)();
     osc = ctx.createOscillator();
     gain = ctx.createGain();
     osc.type = "sine";
-    osc.frequency.value = 196;
+    osc.frequency.value = 196; // G3 soft ambient tone
     gain.gain.value = 0;
     osc.connect(gain).connect(ctx.destination);
     osc.start();
   }
-  if (ctx.state === 'suspended') ctx.resume();
+  if (ctx.state === "suspended") ctx.resume();
 
-  on = !on;
-  gain.gain.value = on ? 0.018 : 0;
-  $("#music").textContent = on ? "♫" : "♪";
+  audioOn = !audioOn;
+  gain.gain.value = audioOn ? 0.018 : 0;
+  $("#music").textContent = audioOn ? "♫" : "♪";
 };
 
-// LIVE TIME COUNTER (Started 23 June 2025 - adjust year if needed)
+// 7. LIVE TIME COUNTER
 const loveStart = new Date("2025-06-23T01:39:00");
 function updateCounter() {
   const diff = new Date() - loveStart;
   if (diff < 0) return;
+
   const days = Math.floor(diff / (1000 * 60 * 60 * 24));
   const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
-  const mins = Math.floor((diff / 1000 / 60) % 60);
+  const mins = Math.floor((diff / (1000 * 60)) % 60);
   const secs = Math.floor((diff / 1000) % 60);
 
-  if ($("#cDays")) $("#cDays").textContent = days;
-  if ($("#cHours")) $("#cHours").textContent = hours;
-  if ($("#cMins")) $("#cMins").textContent = mins;
-  if ($("#cSecs")) $("#cSecs").textContent = secs;
+  if ($("#cDays")) $("#cDays").textContent = String(days).padStart(2, '0');
+  if ($("#cHours")) $("#cHours").textContent = String(hours).padStart(2, '0');
+  if ($("#cMins")) $("#cMins").textContent = String(mins).padStart(2, '0');
+  if ($("#cSecs")) $("#cSecs").textContent = String(secs).padStart(2, '0');
 }
 setInterval(updateCounter, 1000);
 updateCounter();
 
-// LOVE REASONS GENERATOR
+// 8. RANDOM LOVE REASONS
 const reasons = [
   "The way your voice sounds when we talk on the phone.",
   "How effortless it feels to spend hours talking with you.",
@@ -79,12 +98,12 @@ $("#nextReason")?.addEventListener("click", () => {
     p.textContent = reasons[reasonIdx % reasons.length];
     p.style.opacity = 1;
     reasonIdx++;
-  }, 200);
+  }, 220);
 });
 
-// CURSOR HEART TRAIL EFFECT
+// 9. CURSOR HEART TRAIL
 document.addEventListener("mousemove", (e) => {
-  if (Math.random() > 0.82) {
+  if (Math.random() > 0.83) {
     const heart = document.createElement("span");
     heart.className = "cursor-heart";
     heart.textContent = ["🖤", "💖", "✨", "🌸"][Math.floor(Math.random() * 4)];
@@ -95,35 +114,28 @@ document.addEventListener("mousemove", (e) => {
   }
 });
 
-// CUTE MINI GAME LOGIC
-const gameArea = document.querySelector("#gameArea");
+// 10. CUTE MINI GAME LOGIC
+const gameArea = $("#gameArea");
 let gameScore = 0, gameTime = 25, gameActive = false, gameTimer = null, gameSpawner = null;
 
 function spawnCuteStar() {
   if (!gameActive) return;
   const el = document.createElement("button");
   el.className = "game-star";
-  el.textContent = Math.random() < .18 ? "💗" : "⭐";
+  el.textContent = Math.random() < 0.2 ? "💗" : "⭐";
   el.style.left = (Math.random() * 82 + 5) + "%";
-  el.style.top = (Math.random() * 72 + 8) + "%";
+  el.style.top = (Math.random() * 70 + 8) + "%";
+  
   el.onclick = () => {
     gameScore += el.textContent === "💗" ? 3 : 1;
-    document.querySelector("#gameScore").textContent = gameScore;
-    el.remove();
-  };
-  gameArea.appendChild(el);
-  setTimeout(() => el.remove(), 1700);
-}
-
-function startCuteGame() {
-  document.querySelectorAll(".game-star").forEach(star => star.remove());
+    $("#gameScore").textContent = gameScore;     el.remove();   };   gameArea.appendChild(el);   setTimeout(() => el.remove(), 1600); }  function startCuteGame() {   $$(".game-star").forEach(star => star.remove());
   gameScore = 0;
   gameTime = 25;
   gameActive = true;
-  document.querySelector("#gameScore").textContent = 0;
-  document.querySelector("#gameTime").textContent = 25;
+  $("#gameScore").textContent = 0;
+  $("#gameTime").textContent = 25;
 
-  const startBtn = document.querySelector("#gameStart");
+  const startBtn = $("#gameStart");
   startBtn.style.display = "none";
 
   clearInterval(gameTimer);
@@ -131,7 +143,7 @@ function startCuteGame() {
 
   gameTimer = setInterval(() => {
     gameTime--;
-    document.querySelector("#gameTime").textContent = gameTime;
+    $("#gameTime").textContent = gameTime;
     if (gameTime <= 0) {
       gameActive = false;
       clearInterval(gameTimer);
@@ -145,5 +157,5 @@ function startCuteGame() {
     }
   }, 1000);
 
-  gameSpawner = setInterval(spawnCuteStar, 650);
+  gameSpawner = setInterval(spawnCuteStar, 620);
 }
